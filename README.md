@@ -24,7 +24,7 @@ export default function App() {
         onChange={(e) => (e.target.checked ? callbacks.on() : callbacks.off())}
         checked={isActive}
       />
-      <p>Keyhoard event {isActive ? "enabled" : "disabled"}</p>
+      <p>Keyboard event {isActive ? "enabled" : "disabled"}</p>
     </div>
   );
 }
