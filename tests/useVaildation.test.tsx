@@ -5,7 +5,7 @@ import { act } from "react-dom/test-utils";
 
 import { InputFunction, InputHandler, useValidation } from "../hooks";
 
-describe("useVaildation testing", () => {
+describe("useValidation testing", () => {
   it("test", async () => {
     let input: InputHandler, inputFn: InputFunction, isValid: boolean;
 

@@ -21,7 +21,7 @@ export type UseValidationProps = {
   containAtLeast?: ValidationChecker[];
 };
 
-export type UseVaildationReturn = {
+export type UseValidationReturn = {
   readonly input: InputHandler;
   readonly inputFn: InputFunction;
   readonly isValid: boolean;
@@ -48,7 +48,7 @@ export function useValidation({
   minLength = 0,
   maxLength = Infinity,
   containAtLeast = [],
-}: UseValidationProps): UseVaildationReturn {
+}: UseValidationProps): UseValidationReturn {
   const [input, inputFn] = useInput({ initialState });
   const isValid = useMemo(() => {
     const value = String(input.value);
