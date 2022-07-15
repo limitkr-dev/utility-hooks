@@ -16,7 +16,7 @@ import { StringOrNumber } from "./types";
 
 export type InputHandler = {
   readonly onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  readonly value?: StringOrNumber;
+  readonly value: StringOrNumber;
   readonly ref: RefObject<HTMLInputElement>;
 };
 
@@ -25,7 +25,7 @@ export type InputFunction = {
 };
 
 export type UseInputProps = {
-  initialState: StringOrNumber | undefined;
+  initialState?: StringOrNumber;
 };
 
 export function useInput({
