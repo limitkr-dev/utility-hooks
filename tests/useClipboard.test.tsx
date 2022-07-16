@@ -7,16 +7,16 @@ import { useClipboard } from "../hooks";
 describe("useClipboard testing", () => {
   it("copy and paste test", async () => {
     const TestComponent: FC = () => {
-      const { copy, paste } = useClipboard({});
+      const { copy, paste, copyRef, pasteRef } = useClipboard({});
 
       return (
         <div>
-          <input data-testid="copy-input-field" id="copy-from" />
-          <button data-testid="copy-btn" onClick={() => copy("copy-from")}>
+          <input data-testid="copy-input-field" ref={copyRef} />
+          <button data-testid="copy-btn" onClick={() => copy()}>
             COPY
           </button>
-          <input data-testid="paste-input-field" id="paste-here" />
-          <button data-testid="paste-btn" onClick={() => paste("paste-here")}>
+          <input data-testid="paste-input-field" ref={pasteRef} />
+          <button data-testid="paste-btn" onClick={() => paste()}>
             PASTE
           </button>
         </div>

@@ -3,6 +3,8 @@
 // Author: Yongin Kim <https://github.com/limitkr>
 // Created At: 2022-07-11
 
+import { MutableRefObject, useRef } from "react";
+
 import { VoidCallback, voidCallback } from "./types";
 
 type UseClipboardProps = {
@@ -11,44 +13,38 @@ type UseClipboardProps = {
 };
 
 type UseClipboardReturn = {
-  readonly copy: (targetId: string) => void;
-  readonly paste: (targetId: string) => void;
+  readonly copy: () => void;
+  readonly paste: () => void;
+  readonly copyRef: MutableRefObject<HTMLInputElement | null>;
+  readonly pasteRef: MutableRefObject<HTMLInputElement | null>;
 };
 
 export function useClipboard({
   onSuccess = voidCallback,
   onError = voidCallback,
 }: UseClipboardProps): UseClipboardReturn {
-  const copy = (targetId: string) => {
-    const element = document.getElementById(
-      targetId
-    ) as HTMLInputElement | null;
-
-    if (!element) {
-      throw Error(`Element ID ${targetId} not found. try another element.`);
+  const copyRef = useRef<HTMLInputElement | null>(null);
+  const pasteRef = useRef<HTMLInputElement | null>(null);
+  const copy = () => {
+    if (copyRef.current) {
+      navigator.clipboard.writeText(copyRef.current.value).then(
+        function () {
+          onSuccess();
+        },
+        function () {
+          onError();
+        }
+      );
     }
-    navigator.clipboard.writeText(element.value).then(
-      function () {
-        onSuccess();
-      },
-      function () {
-        onError();
-      }
-    );
   };
 
-  const paste = (targetId: string) => {
+  const paste = () => {
     navigator.clipboard.readText().then((clipText) => {
-      const element = document.getElementById(
-        targetId
-      ) as HTMLInputElement | null;
-
-      if (!element) {
-        throw Error(`Element ID ${targetId} not found. try another element.`);
+      if (pasteRef.current) {
+        pasteRef.current.value = clipText;
       }
-      element.value = clipText;
     });
   };
 
-  return { copy, paste } as const;
+  return { copy, paste, copyRef, pasteRef } as const;
 }
